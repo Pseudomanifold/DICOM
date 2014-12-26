@@ -66,6 +66,6 @@ print("##############\n"
       "Samples:                    %d\n"
       "Bits:                       %d\n"
       "Photometric interpretation: %s\n"
-      "Signed:                     %d\n"
+      "Unsigned:                   %d\n"
         % (width, height, samples, bits, interpretation, representation == 0 ),
       file=sys.stderr)
