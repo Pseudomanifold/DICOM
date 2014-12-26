@@ -33,6 +33,13 @@ from __future__ import print_function
 import dicom
 import sys
 
+def usage():
+  print("Usage: dicomdump FILE", file=sys.stderr)
+
+if len(sys.argv) != 2:
+  usage()
+  sys.exit(-1)
+
 f              = dicom.read_file( sys.argv[1] )
 bits           = f.BitsAllocated
 width          = f.Columns
@@ -41,6 +48,10 @@ representation = f.PixelRepresentation
 interpretation = f.PhotometricInterpretation
 samples        = f.SamplesPerPixel
 
+# pydicom is lazy and reports the raw bytes in the `PixelData` section exactly
+# as they are found. There is no reason why we should not do the same. The
+# burden is thus on the user to obtain a usable RAW file.
+
 sys.stdout.write( f.PixelData )
 
 #
@@ -48,7 +59,7 @@ sys.stdout.write( f.PixelData )
 #
 
 print("##############\n"
-      "# Image data #\n"
+      "# Pixel data #\n"
       "##############\n\n"
       "Width:                      %d\n"
       "Height:                     %d\n"
