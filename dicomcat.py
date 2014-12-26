@@ -26,6 +26,7 @@ from __future__ import print_function
 
 import argparse
 import dicom
+import os
 import sys
 
 parser = argparse.ArgumentParser(description="This program concatenates pixel data of DICOM files. All files need to have the same image dimensions and refer to the same patient for the concatenation to work.")
@@ -58,5 +59,10 @@ for index,filename in enumerate(arguments.files):
       raise Exception("Number of bits must agree over all files")
     if f.PixelRepresentation != unsigned:
       raise Exception("Representation (signed/unsigned) must agree over all files")
+
+  percentage = 100.0 * index / float(len(arguments.files)-1)
+
+  print("[%6.2f%%] Processing '%s'..." % (percentage, os.path.basename(filename) ),
+        file=sys.stderr)
 
   sys.stdout.write( f.PixelData )
