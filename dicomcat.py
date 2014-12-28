@@ -29,8 +29,22 @@ import dicom
 import os
 import sys
 
+def formatFilename(prefix,
+                    width, height, depth,
+                    bits, unsigned):
+
+  return format("%s_%dx%dx%d_%d%s") % (prefix,
+                                       width, height, depth,
+                                       bits, "u" if unsigned == 0 else "s" )
+
+
+#
+# main
+#
+
 parser = argparse.ArgumentParser(description="This program concatenates pixel data of DICOM files. All files need to have the same image dimensions and refer to the same patient for the concatenation to work.")
 parser.add_argument("files", metavar="FILE", type=str, nargs="+", help="File for concatenation")
+parser.add_argument("--prefix", help="Prefix for output file")
 
 arguments = parser.parse_args()
 
@@ -39,6 +53,7 @@ width    = None
 height   = None
 bits     = None
 unsigned = None
+outFile  = sys.stdout
 
 for index,filename in enumerate(arguments.files):
   f = dicom.read_file(filename) 
@@ -48,6 +63,12 @@ for index,filename in enumerate(arguments.files):
     height   = f.Rows
     bits     = f.BitsAllocated
     unsigned = f.PixelRepresentation
+
+    # Open output file for writing if necessary
+    if arguments.prefix:
+      outFile = open(formatFilename(arguments.prefix,
+                                    width, height, len(arguments.files),
+                                    bits, unsigned), "w")
   else:
     if f.PatientsName != name:
       raise Exception("Name must agree over all files")
@@ -65,4 +86,4 @@ for index,filename in enumerate(arguments.files):
   print("[%6.2f%%] Processing '%s'..." % (percentage, os.path.basename(filename) ),
         file=sys.stderr)
 
-  sys.stdout.write( f.PixelData )
+  outFile.write( f.PixelData )
