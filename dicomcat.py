@@ -81,7 +81,7 @@ for index,filename in enumerate(arguments.files):
     if f.PixelRepresentation != unsigned:
       raise Exception("Representation (signed/unsigned) must agree over all files")
 
-  percentage = 100.0 * index / float(len(arguments.files)-1)
+  percentage = 100.0 * (index+1) / float(len(arguments.files))
 
   print("[%6.2f%%] Processing '%s'..." % (percentage, os.path.basename(filename) ),
         file=sys.stderr)
