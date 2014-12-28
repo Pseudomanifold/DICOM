@@ -2,6 +2,18 @@
 #
 # recursive_conversion --- Concatenates and converts a directory tree recursively
 #
+# This script is useful for concatenating multiple series of DICOM files from
+# e.g. multiple runs of an MRI machine. Assuming that different DICOM series
+# are stored in subdirectories of the form Data/2011/STUD01/SER??, you could
+# call the script as follows:
+#
+#   ./recursive_conversion.py Data/2011/STUD01
+#
+# The result will be a series of files that are named SER??_x_y_z_b[u|s], where
+# x, y, and z refer to the dimensions of the concatenated raw DICOM volume, b
+# contains the number of bits for representing a single entry, and u|s
+# indicates whether data is (un)signed.
+#
 # Copyright (c) 2014 Bastian Rieck
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
