@@ -140,3 +140,5 @@ for index,filename in enumerate(filenames):
       raise Exception("Representation (signed/unsigned) must agree over all files")
 
   outFile.write( f.PixelData )
+
+print("Finished writing data to '%s'" % outFile.name, file=sys.stderr)
