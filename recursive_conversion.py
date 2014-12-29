@@ -34,9 +34,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from __future__ import print_function
+
 import os
 import subprocess
 import sys
+
+def usage():
+  print("Usage: recursive_conversion.py FILE", file=sys.stderr)
+
+if len(sys.argv) != 2:
+  usage()
+  sys.exit(-1)
 
 for directory, subdirectories, files in os.walk(sys.argv[1], topdown=False):
   if files:

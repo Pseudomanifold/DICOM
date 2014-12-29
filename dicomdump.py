@@ -34,7 +34,7 @@ import dicom
 import sys
 
 def usage():
-  print("Usage: dicomdump FILE", file=sys.stderr)
+  print("Usage: dicomdump.py FILE", file=sys.stderr)
 
 if len(sys.argv) != 2:
   usage()
