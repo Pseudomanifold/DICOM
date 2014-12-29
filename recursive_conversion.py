@@ -41,6 +41,6 @@ import sys
 for directory, subdirectories, files in os.walk(sys.argv[1], topdown=False):
   if files:
     prefix    = os.path.basename(directory)
-    filenames = [ str(os.path.join(directory, x)) for x in files ]
+    filenames = [ str(os.path.join(directory, x)) for x in sorted(files) ]
 
     subprocess.call(["./dicomcat.py", "--check", "--prefix", prefix ] + filenames)
