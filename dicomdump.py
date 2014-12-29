@@ -47,6 +47,7 @@ height         = f.Rows
 representation = f.PixelRepresentation
 interpretation = f.PhotometricInterpretation
 samples        = f.SamplesPerPixel
+transferSyntax = f.file_meta[0x0002, 0x0010].value
 
 # pydicom is lazy and reports the raw bytes in the `PixelData` section exactly
 # as they are found. There is no reason why we should not do the same. The
@@ -67,5 +68,6 @@ print("##############\n"
       "Bits:                       %d\n"
       "Photometric interpretation: %s\n"
       "Unsigned:                   %d\n"
-        % (width, height, samples, bits, interpretation, representation == 0 ),
+      "Transfer syntax:            %s\n"
+        % (width, height, samples, bits, interpretation, representation == 0, transferSyntax ),
       file=sys.stderr)
